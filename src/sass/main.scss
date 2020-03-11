@@ -1,0 +1,93 @@
+//==================================== main ==========================================//
+body {
+  color: #fff;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-size: 13px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  opacity: 0.6;
+  transition: 0.1s ease-in-out;
+  &:hover {opacity: 1;}
+}
+
+a {
+	color: white;
+	text-decoration: none;
+	opacity: 0.6;
+	transition: 0.1s ease-in-out;
+	cursor: pointer;
+  &:hover {opacity: 1;}
+}
+//===================================================================================//
+
+//================================== fonts ==========================================//
+@font-face {
+  font-family: "Roboto";
+  src: url("./assets/fonts/Roboto.woff") format("woff"),
+    url("./assets/fonts/Roboto.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "icon";
+  src: url("./assets/fonts/icon.woff") format("woff"),
+    url("./assets/fonts/icon.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+[data-icon]:before {
+  font-family: "icon" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "icon" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-settings:before {content: "\62";}
+.icon-chrome:before {content: "\63";}
+.icon-apps:before {content: "\64";}
+.icon-twitter:before {content: "\66";}
+.icon-search:before {content: "\61";}
+.icon-heart-o:before {content: "\67";}
+.icon-heart:before {content: "\68";}
+.icon-add:before {content: "\65";}
+//===================================================================================//
+
+//=============================== Animations ========================================//
+.show {
+	opacity: 1;
+	z-index: 50;
+}
+.top {transform: translateY(10px);}
+.bottom {transform: translateY(-10px);}
+.toggle-off {transition: 0.3s ease-in-out;}
+.toggle-on {
+	opacity: 0;
+	transition: 0.7s ease-in-out;
+}
+//===================================================================================//
