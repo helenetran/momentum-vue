@@ -6,24 +6,18 @@
     //- Settings popup.
     transition(name="fade")
       .settings__popup(v-if="show")
+
+        //- Left block.
         .settings__popup--left
           ul
             li(v-for="item in listItems" :key="item.id" :class="item.class" @click="showParagraph(item.id)") {{ item.name }}
           .login
             .login__title Log In
             .login__description Sync your account & more!
-        .settings__popup--right
-          div(v-if="paragraphId === 0") General
-          div(v-if="paragraphId === 1") Todo
-          div(v-if="paragraphId === 2") Mantras
-          div(v-if="paragraphId === 3") Photos
-          div(v-if="paragraphId === 4") Quotes
-          div(v-if="paragraphId === 5") Links
-          div(v-if="paragraphId === 6") Balance
-          div(v-if="paragraphId === 7") Help
-          div(v-if="paragraphId === 8") What's New
-          div(v-if="paragraphId === 9") About
-          div(v-if="paragraphId === 10") Upgrade to Plus
+
+        //- Right block.
+        .settings__popup--right(v-for="item in listItems" :key="item.id")
+          div(v-if="paragraphId === item.id") {{ item.name }}
 </template>
 
 <script>
@@ -39,7 +33,8 @@ export default {
       {
         id: 0,
         name: 'General',
-        class: 'list-item__medium'
+        class: 'list-item__medium',
+        condition: 'paragraphId === 0'
       },
       {
         id: 1,
@@ -98,9 +93,8 @@ export default {
       let settingWheel = event.target
       settingWheel.classList.toggle("rotate")
     },
-    showParagraph(test) {
-      console.log(test)
-      this.paragraphId = test
+    showParagraph(paragraphIdClicked) {
+      this.paragraphId = paragraphIdClicked
     }
   }
 }
