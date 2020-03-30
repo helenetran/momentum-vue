@@ -1,10 +1,10 @@
 <template lang="pug">
   #app
-    background
-
     .middle-block
-      clock
+      clock(:time='time')
       greeting
+
+    background
     //- <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
 </template>
 
@@ -15,7 +15,30 @@ import greeting from './components/greeting.vue'
 
 export default {
   name: 'App',
-  components: { background, clock, greeting }
+  beforeMount () {
+    this.getTime()
+  },
+  mounted () {
+    // this.getTime()
+    setInterval(() => {
+      this.getTime()
+    }, 1000)
+  },
+  components: { background, clock, greeting },
+  data: () =>({
+    time: {
+      hours: 6,
+      minutes: 0
+    }
+  }),
+  methods: {
+    getTime () {
+      let today = new Date()
+      this.time.hours = today.getHours() < 10 ? '0' + today.getHours() : today.getHours()
+      this.time.minutes = today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes()
+      console.log(today, this.time.minutes)
+    }
+  }
 }
 </script>
 

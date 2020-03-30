@@ -9,21 +9,17 @@
 export default {
   name: 'clock',
   mounted () {
-    this.getTime()
+    this.showTime()
     setInterval(() => {
-      this.getTime()
+      this.showTime()
     }, 60000)
   },
+  props: ['time'],
   methods: {
-    getTime () {
-      let today = new Date()
-      let hours = today.getHours() < 10 ? '0' + today.getHours() : today.getHours()
-      let minutes = today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes()
-
-      document.getElementById("hours").innerHTML = hours
-      document.getElementById("minutes").innerHTML = minutes
-
-      // greetingMessage(hours)
+    showTime () {
+      // console.log(this.time.minutes)
+      document.getElementById("hours").innerHTML = this.time.hours
+      document.getElementById("minutes").innerHTML = this.time.minutes
     }
   }
 }
