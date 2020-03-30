@@ -1,11 +1,10 @@
 <template lang="pug">
   #app
     .middle-block
-      clock(:time='time')
+      clock(:hours="hours" :minutes="minutes")
       greeting
 
     background
-    //- <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
 </template>
 
 <script>
@@ -15,28 +14,33 @@ import greeting from './components/greeting.vue'
 
 export default {
   name: 'App',
-  beforeMount () {
-    this.getTime()
-  },
-  mounted () {
-    // this.getTime()
-    setInterval(() => {
-      this.getTime()
-    }, 1000)
-  },
   components: { background, clock, greeting },
   data: () =>({
-    time: {
-      hours: 6,
-      minutes: 0
-    }
+    hours: 0,
+    minutes: 0,
+    seconds: 0
   }),
+  mounted () {
+    this.getTime()
+
+    // Number of seconds to snap the the real time minutes change.
+    const timeoutDuration = (60 - this.seconds)
+
+    setTimeout(() => {
+      this.getTime()
+
+      setInterval(
+        () => {
+          this.getTime()
+        }, 60000)
+    }, timeoutDuration * 1000)
+  },
   methods: {
     getTime () {
-      let today = new Date()
-      this.time.hours = today.getHours() < 10 ? '0' + today.getHours() : today.getHours()
-      this.time.minutes = today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes()
-      console.log(today, this.time.minutes)
+      let now = new Date()
+      this.hours = now.getHours() < 10 ? '0' + now.getHours() : now.getHours()
+      this.minutes = now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes()
+      this.seconds = now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds()
     }
   }
 }
