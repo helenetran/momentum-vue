@@ -15,6 +15,7 @@ export default {
 #clock {
   font-size: 13em;
   font-weight: 600;
+  text-align: center;
 }
 </style>
 

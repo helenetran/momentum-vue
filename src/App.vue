@@ -2,7 +2,7 @@
   #app
     .middle-block
       clock(:hours="hours" :minutes="minutes")
-      greeting
+      greeting(:hours="hours" :minutes="minutes")
 
     background
 </template>
@@ -56,7 +56,6 @@ export default {
 .middle-block {
   position: absolute;
   top: 36%;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
 }
 </style>
