@@ -12,7 +12,7 @@
     @focus="animFocus"
     @blur="animBlur"
     :class="{ 'empty': noUserName, 'highlight': highlight, 'focus': focus }")
-  span .
+  span(v-if="displayPoint") .
 </template>
 
 <script>
@@ -25,26 +25,49 @@ export default {
     usernameInput: '',
     greetingMessage: 'Hello',
     highlight: false,
-    focus: false
+    focus: false,
+    displayPoint: false
   }),
+  mounted () {
+    if (localStorage.username) {
+      document.getElementsByClassName('greeting__username')[0].innerHTML = localStorage.username
+      this.noUserName = false
+    }
+  },
   methods: {
     checkUsername () {
       this.usernameInput = document.getElementsByClassName('greeting__username')[0].innerHTML
+
       localStorage.username = this.usernameInput
       if (localStorage.username) {
         this.noUserName = false
         this.usernameInput = localStorage.username
+        this.displayPoint = true
       }
-      else this.noUserName = true
+
+      if (!localStorage.username && this.focus) this.displayPoint = true
+
+      else if (!localStorage.username && !this.focus) {
+        this.noUserName = true
+        this.displayPoint = false
+        console.log('noUserName', this.noUserName)
+      }
     },
     animFocus () {
       this.highlight = true
       this.focus = true
+      this.displayPoint = true
       setTimeout(() => {this.highlight = false}, 300)
     },
     animBlur () {
       this.highlight = true
       this.focus = false
+
+      if (!localStorage.username) {
+        this.displayPoint = false
+        this.noUserName = true
+      }
+
       setTimeout(() => {this.highlight = false}, 300)
     }
   }
@@ -60,23 +83,16 @@ export default {
   &__message {text-align: right;}
   &__username {
     position: relative;
-    display: block;
-    color: white;
-    font-weight: normal;
-    font-family: Roboto, Arial, Helvetica, sans-serif;
-    font-size: inherit;
     border: none;
-    background-image: none;
-    background-color: transparent;
-    box-shadow: none;
-    max-width: 350px;
     min-width: 50px;
     outline: none;
+    transition: 0.3s ease-out;
+    border-radius: 3px;
     cursor: auto;
     transition: 0.3s ease-out;
     border-radius: 3px;
     &.empty:after {content: "what's your name?";}
-    &.empty + span {display: none}
+    &.point + span {display: none;}
     &.focus:after {display: none;}
     &:focus:before {
       content: '';
@@ -93,21 +109,15 @@ export default {
   }
 }
 
-
-
 ::placeholder {color: #fff;}
 /*=========================================================================*/
 
 /*========================= media queries =================================*/
-@media screen and (max-height: 720px) {
-  .greeting {
-  font-size: 3.5em;
-  width: unset;
-  }
-}
-
 @media screen and (max-width: 750px) {
-  .greeting {top: 35%;}
+  .greeting {
+    top: 35%;
+    font-size: 2.5em;
+  }
 }
 
 @media screen and (max-width: 670px) {
@@ -123,6 +133,21 @@ export default {
   position: absolute;
     left: 50%;
     transform: translateX(-50%);
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .greeting {width: 420px;}
+}
+
+@media screen and (max-width: 500px) {
+  .greeting {font-size: 2.2em;}
+}
+
+@media screen and (max-height: 720px) {
+  .greeting {
+  font-size: 3.5em;
+  width: unset;
   }
 }
 
@@ -149,14 +174,6 @@ export default {
 
 @media screen and (max-height: 270px) {
   .greeting {top: -42%;}
-}
-
-@media screen and (max-width: 620px) {
-  .greeting {width: 420px;}
-}
-
-@media screen and (max-width: 500px) {
-  .greeting {font-size: 2.2em;}
 }
 /*=========================================================================*/
 
